@@ -10,6 +10,46 @@ class HomePage extends GetView<RotiController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Toko Roti")),
+
+      // 🔥 DRAWER NAVIGASI
+      drawer: Drawer(
+        child: Column(
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: Colors.brown.shade300),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  "Toko Roti",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text("Home"),
+              onTap: () {
+                Get.back(); // tutup drawer
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.point_of_sale),
+              title: const Text("Kasir"),
+              onTap: () {
+                Get.back();
+                Get.toNamed(AppRoutes.kasir);
+              },
+            ),
+          ],
+        ),
+      ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           controller.clearForm();
@@ -17,6 +57,7 @@ class HomePage extends GetView<RotiController> {
         },
         child: const Icon(Icons.add),
       ),
+
       body: StreamBuilder(
         stream: controller.getRoti(),
         builder: (context, snapshot) {
@@ -30,16 +71,17 @@ class HomePage extends GetView<RotiController> {
             itemCount: docs.length,
             itemBuilder: (context, index) {
               final data = docs[index];
+
               return Card(
                 margin: const EdgeInsets.all(8),
                 child: ListTile(
                   title: Text(data['nama']),
                   subtitle: Text(
-                      "Harga: ${data['harga']} | Stok: ${data['stok']}"),
+                    "Harga: ${data['harga']} | Stok: ${data['stok']}",
+                  ),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete, color: Colors.red),
-                    onPressed: () =>
-                        controller.hapusRoti(data.id),
+                    onPressed: () => controller.hapusRoti(data.id),
                   ),
                   onTap: () {
                     controller.setForm(
@@ -48,10 +90,7 @@ class HomePage extends GetView<RotiController> {
                       stok: data['stok'],
                     );
 
-                    Get.toNamed(
-                      AppRoutes.formroti,
-                      arguments: data.id,
-                    );
+                    Get.toNamed(AppRoutes.formroti, arguments: data.id);
                   },
                 ),
               );

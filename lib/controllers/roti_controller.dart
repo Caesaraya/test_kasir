@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:model_kasir/models/produk_model.dart';
 
 class RotiController extends GetxController {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -36,11 +37,24 @@ class RotiController extends GetxController {
     await rotiRef.doc(id).delete();
   }
 
-  void setForm({
-    required String nama,
-    required int harga,
-    required int stok,
-  }) {
+  Future<void> kurangiStok(ProdukModel produk, int jumlahBeli) async {
+    final docRef = firestore.collection('roti').doc(produk.id);
+
+    await firestore.runTransaction((transaction) async {
+      final snapshot = await transaction.get(docRef);
+
+      final stokSekarang = snapshot['stok'];
+      final stokBaru = stokSekarang - jumlahBeli;
+
+      if (stokBaru < 0) {
+        throw Exception("Stok tidak mencukupi");
+      }
+
+      transaction.update(docRef, {'stok': stokBaru});
+    });
+  }
+
+  void setForm({required String nama, required int harga, required int stok}) {
     namaC.value = nama;
     hargaC.value = harga.toString();
     stokC.value = stok.toString();

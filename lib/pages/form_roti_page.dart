@@ -13,32 +13,36 @@ class RotiFormPage extends GetView<RotiController> {
     final isEdit = id != null;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(isEdit ? "Edit Roti" : "Tambah Roti"),
-      ),
+      appBar: AppBar(title: Text(isEdit ? "Edit Roti" : "Tambah Roti")),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            Obx(() => CustomTextField(
-              label: "Nama Roti",
-              initialValue: controller.namaC.value,
-              onChanged: (val) => controller.namaC.value = val,
-            )),
+            Obx(
+              () => CustomTextField(
+                label: "Nama Roti",
+                initialValue: controller.namaC.value,
+                onChanged: (val) => controller.namaC.value = val,
+              ),
+            ),
             const SizedBox(height: 12),
-            Obx(() => CustomTextField(
-              label: "Harga",
-              keyboardType: TextInputType.number,
-              initialValue: controller.hargaC.value,
-              onChanged: (val) => controller.hargaC.value = val,
-            )),
+            Obx(
+              () => CustomTextField(
+                label: "Harga",
+                keyboardType: TextInputType.number,
+                initialValue: controller.hargaC.value,
+                onChanged: (val) => controller.hargaC.value = val,
+              ),
+            ),
             const SizedBox(height: 12),
-            Obx(() => CustomTextField(
-              label: "Stok",
-              keyboardType: TextInputType.number,
-              initialValue: controller.stokC.value,
-              onChanged: (val) => controller.stokC.value = val,
-            )),
+            Obx(
+              () => CustomTextField(
+                label: "Stok",
+                keyboardType: TextInputType.number,
+                initialValue: controller.stokC.value,
+                onChanged: (val) => controller.stokC.value = val,
+              ),
+            ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
