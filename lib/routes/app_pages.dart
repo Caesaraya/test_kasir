@@ -18,7 +18,7 @@ class AppPages {
       page: () => RotiFormPage(),
       binding: RotiBinding(),
     ),
-    GetPage(name: AppRoutes.kasir, page: () => KasirPage()),
+    GetPage(name: AppRoutes.kasir, page: () => KasirPage(), binding: RotiBinding()),
     GetPage(name: AppRoutes.payment, page: () => PaymentPage()),
   ];
 }

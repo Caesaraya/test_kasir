@@ -8,6 +8,7 @@ class RotiController extends GetxController {
   final namaC = ''.obs;
   final hargaC = ''.obs;
   final stokC = ''.obs;
+  final searchC = ''.obs;
 
   CollectionReference get rotiRef => firestore.collection('roti');
 
